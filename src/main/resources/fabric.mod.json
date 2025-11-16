@@ -27,12 +27,10 @@
 	"mixins": [
 		"earlyloadingscreen.mixins.json"
 	],
-	"languageAdapters": {
-		"earlyloadingscreen:languageAdapterEarlyLaunch": "com.ishland.earlyloadingscreen.LanguageAdapterLaunch"
-	},
+
 	"depends": {
-		"fabricloader": ">=0.14.23",
-		"minecraft": ">=1.21.2-rc.1",
+		"fabricloader": ">=0.17.3",
+		"minecraft": ">=1.21.7",
 		"java": ">=17"
 	},
 	"custom": {

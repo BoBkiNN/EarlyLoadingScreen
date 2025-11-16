@@ -47,7 +47,7 @@ public abstract class MixinMinecraftClient {
             }
 
             stringBuilder.append(" ");
-            stringBuilder.append(net.minecraft.SharedConstants.getGameVersion().getName());
+            stringBuilder.append(net.minecraft.SharedConstants.getGameVersion().name());
             windowTitle = stringBuilder.toString();
         } catch (Throwable t) {
             SharedConstants.LOGGER.error("Failed to get window title", t);
@@ -63,9 +63,12 @@ public abstract class MixinMinecraftClient {
     private void postBlit(boolean tick, CallbackInfo ci) {
         if (this.getOverlay() != null) {
             final LoadingScreenManager.RenderLoop renderLoop = LoadingScreenManager.windowEventLoop.renderLoop;
-            gltSetText(renderLoop.fpsText, "%d fps".formatted(this.getCurrentFps()));
-            final Window window = MinecraftClient.getInstance().getWindow();
-            renderLoop.render(window.getFramebufferWidth(), window.getFramebufferHeight(), (float) window.getScaleFactor() / 2.0f, false);
+            if (renderLoop != null) {
+                gltSetText(renderLoop.fpsText, "%d fps".formatted(this.getCurrentFps()));
+                final Window window = MinecraftClient.getInstance().getWindow();
+                renderLoop.render(window.getFramebufferWidth(), window.getFramebufferHeight(), (float) window.getScaleFactor() / 2.0f, false);
+            }
+
             // restore state
             int activeTexture = GlStateManager._getActiveTexture();
             GL32.glActiveTexture(activeTexture);
