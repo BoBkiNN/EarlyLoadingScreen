@@ -89,8 +89,8 @@ public class LoadingScreenManager {
             }
             eventLoopStarted = true;
             windowEventLoop.start();
-            LOGGER.info("Early window created");
             glfwPollEvents();
+            LOGGER.info("Early window created");
         }
     }
 

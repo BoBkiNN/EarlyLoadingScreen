@@ -55,6 +55,7 @@ public class MixinWindow {
                 SharedConstants.LOGGER.info("Destroying early window");
                 GLFW.glfwDestroyWindow(context);
                 GLFW.glfwFocusWindow(newHandle);
+                GLFW.glfwRequestWindowAttention(newHandle);
                 return newHandle;
             }
         } else {

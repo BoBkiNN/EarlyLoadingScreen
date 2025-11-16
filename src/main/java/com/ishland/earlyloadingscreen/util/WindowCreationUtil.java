@@ -3,6 +3,7 @@ package com.ishland.earlyloadingscreen.util;
 import com.ishland.earlyloadingscreen.LoadingProgressManager;
 import com.ishland.earlyloadingscreen.SharedConstants;
 import com.ishland.earlyloadingscreen.patch.SodiumOSDetectionPatch;
+import com.ishland.earlyloadingscreen.platform_cl.Config;
 import net.fabricmc.loader.api.FabricLoader;
 import org.lwjgl.glfw.GLFW;
 
@@ -91,7 +92,7 @@ public class WindowCreationUtil {
     private static void sodiumHook(boolean after) {
         if (!foundSodium) return;
         final Class<?> workaroundsClazz;
-        final Class<? extends Enum> workaroundsReferenceClazz;
+        final Class<? extends Enum<?>> workaroundsReferenceClazz;
         final Class<?> nvidiaWorkaroundsClazz;
         try {
             workaroundsClazz = locateClass("me.jellysquid.mods.sodium.client.util.workarounds.Workarounds", "me.jellysquid.mods.sodium.client.compatibility.workarounds.Workarounds", "net.caffeinemc.mods.sodium.client.compatibility.workarounds.Workarounds");
@@ -119,7 +120,9 @@ public class WindowCreationUtil {
                     } catch (NoSuchMethodException e) {
                         nvidiaWorkaroundsClazz.getMethod("applyEnvironmentChanges").invoke(null);
                     }
-                    LoadingProgressManager.showMessageAsProgress("Installed Nvidia workarounds from sodium", 5000L);
+                    if (Config.NOTIFY_SODIUM_WORKAROUNDS_INSTALLED) {
+                        LoadingProgressManager.showMessageAsProgress("Installed Nvidia workarounds from sodium", 5000L);
+                    }
                 } else {
                     try {
                         nvidiaWorkaroundsClazz.getMethod("uninstall").invoke(null);
