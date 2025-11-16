@@ -198,12 +198,18 @@ public class LoadingScreenManager {
         GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_FORWARD_COMPAT, 1);
         int configuredWidth = 854;
         int configuredHeight = 480;
-        try {
-            final Arguments arguments = FabricLoaderImpl.INSTANCE.getGameProvider().getArguments();
-            configuredWidth = Integer.parseInt(arguments.getOrDefault("width", "854"));
-            configuredHeight = Integer.parseInt(arguments.getOrDefault("height", "480"));
-        } catch (Throwable t) {
-            LOGGER.error("Failed to load window configuration", t);
+        final String[] args = FabricLoader.getInstance().getLaunchArguments(true);
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            if (i + 1 < args.length && arg.startsWith("--")) {
+                arg = arg.substring(2).toLowerCase(Locale.ROOT);
+                if (arg.equals("width")) {
+                    configuredWidth = Integer.parseInt(args[i + 1]);
+                }
+                if (arg.equals("height")) {
+                    configuredHeight = Integer.parseInt(args[i + 1]);
+                }
+            }
         }
         String minecraftVersion = "Unknown";
         try {
