@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.injection.InjectionPoint;
 
 import java.util.Collection;
 
+@SuppressWarnings("unused")
+@InjectionPoint.AtCode(namespace = "earlyloadingscreen", value = "earlyloadingscreen")
 public class MixinEarlyLaunch extends InjectionPoint {
 
     public static final String SMALL_REMINDER = "The following \"Unable to register injection point\" can be safely ignored. ";
