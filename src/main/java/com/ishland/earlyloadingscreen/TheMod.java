@@ -22,6 +22,7 @@ public class TheMod implements ModInitializer {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private static void auditMixins() {
         Logger auditLogger = LoggerFactory.getLogger("EarlyLoadingScreen Mixin Audit");
         try {

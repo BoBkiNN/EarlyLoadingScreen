@@ -1,6 +1,5 @@
 package com.ishland.earlyloadingscreen;
 
-import com.ishland.earlyloadingscreen.EarlyLaunch;
 import com.ishland.earlyloadingscreen.platform_cl.LaunchPoint;
 
 public class MixinEarlyLaunch {

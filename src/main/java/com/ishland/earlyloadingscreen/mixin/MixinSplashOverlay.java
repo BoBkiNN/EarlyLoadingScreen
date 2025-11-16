@@ -3,11 +3,7 @@ package com.ishland.earlyloadingscreen.mixin;
 import com.ishland.earlyloadingscreen.LoadingProgressManager;
 import com.ishland.earlyloadingscreen.LoadingScreenManager;
 import com.ishland.earlyloadingscreen.mixin.access.ISimpleResourceReload;
-import com.mojang.blaze3d.opengl.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.SplashOverlay;
-import net.minecraft.client.util.Window;
 import net.minecraft.resource.ResourceReload;
 import net.minecraft.resource.SimpleResourceReload;
 import org.spongepowered.asm.mixin.Final;
@@ -18,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Arrays;
-
-import static com.ishland.earlyloadingscreen.render.GLText.gltSetText;
 
 @Mixin(value = SplashOverlay.class, priority = 1010)
 public class MixinSplashOverlay {

@@ -2,7 +2,6 @@ package com.ishland.earlyloadingscreen.mixin;
 
 import com.ishland.earlyloadingscreen.Launch;
 import com.ishland.earlyloadingscreen.LoadingScreenManager;
-import com.ishland.earlyloadingscreen.SharedConstants;
 import com.ishland.earlyloadingscreen.mixin.access.IGlStateManager;
 import com.ishland.earlyloadingscreen.platform_cl.Config;
 import com.ishland.earlyloadingscreen.platform_cl.LaunchPoint;
@@ -10,7 +9,6 @@ import com.mojang.blaze3d.opengl.GlStateManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.util.Window;
-import net.minecraft.util.ModStatus;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL32;
 import org.objectweb.asm.Opcodes;
@@ -27,32 +25,13 @@ public abstract class MixinMinecraftClient {
 
     @Shadow protected abstract String getWindowTitle();
 
-    @Shadow
-    public static ModStatus getModStatus() {
-        throw new AbstractMethodError();
-    }
-
     @Shadow public abstract int getCurrentFps();
 
     @Shadow @Nullable public abstract Overlay getOverlay();
 
     @Inject(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;instance:Lnet/minecraft/client/MinecraftClient;", opcode = Opcodes.PUTSTATIC, shift = At.Shift.AFTER))
     private void earlyInit(CallbackInfo ci) {
-        String windowTitle;
-        try {
-            StringBuilder stringBuilder = new StringBuilder("Minecraft");
-            final ModStatus modStatus = getModStatus();
-            if (modStatus != null && modStatus.isModded()) {
-                stringBuilder.append("*");
-            }
-
-            stringBuilder.append(" ");
-            stringBuilder.append(net.minecraft.SharedConstants.getGameVersion().name());
-            windowTitle = stringBuilder.toString();
-        } catch (Throwable t) {
-            SharedConstants.LOGGER.error("Failed to get window title", t);
-            windowTitle = "Minecraft";
-        }
+        String windowTitle = getWindowTitle();
         if (Config.WINDOW_CREATION_POINT.ordinal() <= LaunchPoint.mcEarly.ordinal()) {
             Launch.initAndCreateWindow(false);
             LoadingScreenManager.windowEventLoop.setWindowTitle(windowTitle);

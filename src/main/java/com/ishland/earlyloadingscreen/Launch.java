@@ -8,7 +8,7 @@ public class Launch {
 
     static {
         final ClassLoader classLoader = Launch.class.getClassLoader();
-        SharedConstants.LOGGER.info(String.format("Loading EarlyLoadingScreen on ClassLoader %s", classLoader.getClass().getName()));
+        SharedConstants.LOGGER.info("Loading EarlyLoadingScreen on ClassLoader {}", classLoader.getClass().getName());
 
         Config.init();
         if (Config.ENABLE_ENTRYPOINT_INFORMATION) {

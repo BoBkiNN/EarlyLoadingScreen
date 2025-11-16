@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressWarnings("unchecked")
 public class EarlyLaunch {
 
     static void load0(LaunchPoint point) {
@@ -29,7 +30,7 @@ public class EarlyLaunch {
         if (Config.WINDOW_CREATION_POINT.ordinal() > point.ordinal()) {
             return;
         }
-        System.out.println(String.format("Loading EarlyLoadingScreen early on ClassLoader %s", classLoader.getClass().getName()));
+        System.out.printf("Loading EarlyLoadingScreen early on ClassLoader %s%n", classLoader.getClass().getName());
 
         final String earlyLaunchProperty = "earlyloadingscreen.duringEarlyLaunch";
         try {

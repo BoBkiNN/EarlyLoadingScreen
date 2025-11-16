@@ -75,7 +75,7 @@ public class SodiumOSDetectionPatch implements BytecodeTransformer {
         } catch (ClassNotFoundException e) {
             return true;
         } catch (Throwable t) {
-            SharedConstants.LOGGER.warn("Failed to retransform class %s".formatted(name), t);
+            SharedConstants.LOGGER.warn("Failed to retransform class {}", name, t);
             return false;
         }
     }
@@ -83,7 +83,7 @@ public class SodiumOSDetectionPatch implements BytecodeTransformer {
     @Override
     public boolean transform(String className, ClassNode node) {
         if (Arrays.asList(SODIUM_WORKAROUNDS_CLASSES).contains(className)) {
-            SharedConstants.LOGGER.info("Patching %s to allow early usage".formatted(className));
+            SharedConstants.LOGGER.info("Patching {} to allow early usage", className);
 
             final MappingResolver resolver = FabricLoader.getInstance().getMappingResolver();
             final String intermediary = "intermediary";

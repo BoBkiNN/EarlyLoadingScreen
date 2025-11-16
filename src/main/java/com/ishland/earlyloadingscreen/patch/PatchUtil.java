@@ -2,7 +2,6 @@ package com.ishland.earlyloadingscreen.patch;
 
 import com.ishland.earlyloadingscreen.SharedConstants;
 import net.bytebuddy.agent.ByteBuddyAgent;
-import org.apache.commons.io.file.PathUtils;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
@@ -66,15 +65,14 @@ public class PatchUtil {
                                 Files.createDirectories(path.getParent());
                                 Files.write(path, buf);
                             } catch (Throwable t) {
-                                SharedConstants.LOGGER.warn("Failed to write transformed class %s to disk".formatted(className), t);
+                                SharedConstants.LOGGER.warn("Failed to write transformed class {} to disk", className, t);
                             }
                             return buf;
                         } else {
                             return null;
                         }
                     } catch (Throwable t) {
-                        t.printStackTrace();
-                        SharedConstants.LOGGER.warn("Failed to transform class " + className, t);
+                        SharedConstants.LOGGER.warn("Failed to transform class {}", className, t);
                         return null;
                     }
                 }

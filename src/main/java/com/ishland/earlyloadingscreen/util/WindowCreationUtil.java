@@ -9,6 +9,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@SuppressWarnings("unchecked")
 public class WindowCreationUtil {
 
     public static long warpGlfwCreateWindow(int width, int height, CharSequence title, long monitor, long share) {
@@ -110,7 +111,7 @@ public class WindowCreationUtil {
         try {
             final Enum<?> NVIDIA_THREADED_OPTIMIZATIONS = Arrays.stream(workaroundsReferenceClazz.getEnumConstants())
                     .filter(anEnum -> anEnum.name().equals("NVIDIA_THREADED_OPTIMIZATIONS") || anEnum.name().equals("NVIDIA_THREADED_OPTIMIZATIONS_BROKEN"))
-                    .findFirst().get();
+                    .findFirst().orElseThrow();
             if ((boolean) workaroundsClazz.getMethod("isWorkaroundEnabled", workaroundsReferenceClazz).invoke(null, NVIDIA_THREADED_OPTIMIZATIONS)) {
                 if (!after) {
                     try {
@@ -128,7 +129,7 @@ public class WindowCreationUtil {
                 }
             }
         } catch (Throwable t) {
-            t.printStackTrace();
+            SharedConstants.LOGGER.error("Failed to install Nvidia workarounds from sodium", t);
         }
     }
 

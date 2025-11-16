@@ -50,12 +50,12 @@ public class AppLoaderAccessSupport {
     }
 
     public interface LoadingScreenAccessor {
-        public ProgressHolderAccessor tryCreateProgressHolder();
+        ProgressHolderAccessor tryCreateProgressHolder();
     }
 
     public interface ProgressHolderAccessor extends Closeable {
-        public void update(Supplier<String> text);
-        public void updateProgress(Supplier<Float> progress);
+        void update(Supplier<String> text);
+        void updateProgress(Supplier<Float> progress);
     }
 
 }
